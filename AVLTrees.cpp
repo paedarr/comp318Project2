@@ -13,16 +13,25 @@ void binaryTree::display() const {
     string order = level_order_string(root);
     display_computation("", root, false);
     cout << "--------------------------------" << endl;
+
+    // <!--- Comment out the lines below if you want to test with the
+    //       vertical binary tree. However, this is unstable and there
+    //       are major issues with alignment and correct output per line.
+    //       However, it can be observed that the program actually does output
+    //       the nodes, and branches, in the correct ordering, it just doesn't
+    //       format correctly.  ---!>
+    // display_vertical(root, 0);
+    // cout << "--------------------------------" << endl;
 }
 
 void binaryTree::display_computation(string order, TreeNode * node, bool isLeft) const{
     if( node != nullptr ){
-        std::cout << order;
+        cout << order;
 
-        std::cout << (isLeft ? "├──" : "└──" );
+        cout << (isLeft ? "├──" : "└──" );
 
         // print the value of the node
-        std::cout << node->data << std::endl;
+        cout << node->data << endl;
 
         // enter the next tree level - left and right branch
         display_computation( order + (isLeft ? "│   " : "    "), node->right, true);
@@ -32,15 +41,15 @@ void binaryTree::display_computation(string order, TreeNode * node, bool isLeft)
 
 
 // !! THIS IS THE OLD DISPLAY METHOD THAT HAS UNSTABLE FORMATTING !!
-// void binaryTree::display_computation(TreeNode* node, int indent) const {
+// void binaryTree::display_vertical(TreeNode* node, int indent) const {
 //   // Use a stack to store nodes and their corresponding indentation levels
-//   std::stack<std::pair<TreeNode*, int> > traversal_stack;
+//   stack<pair<TreeNode*, int> > traversal_stack;
 
 //   // Initialize stack with the root and indent level 0
-//   traversal_stack.push(std::make_pair(node, indent));
+//   traversal_stack.push(make_pair(node, indent));
 
 //   while (!traversal_stack.empty()) {
-//     std::pair<TreeNode*, int> current_pair = traversal_stack.top();
+//     pair<TreeNode*, int> current_pair = traversal_stack.top();
 //     traversal_stack.pop();
 
 //     node = current_pair.first;
@@ -52,7 +61,7 @@ void binaryTree::display_computation(string order, TreeNode * node, bool isLeft)
 //     if (node != nullptr) {
 //       // Print indentation
 //       if (indent > 0) {
-//         std::cout << setw(indent) << ' ';  // Add spaces based on indent level
+//         cout << setw(indent) << ' ';  // Add spaces based on indent level
 //       }
 
 //       // Add branch character based on right child
@@ -72,13 +81,13 @@ void binaryTree::display_computation(string order, TreeNode * node, bool isLeft)
 //         }
 //         cout << "\\";
 //       }
-//       std::cout << "\n";
+//       cout << "\n";
 
 //       // Push right subtree first (pre-order) with increased indentation
-//       traversal_stack.push(std::make_pair(node->right, indent + 1));
+//       traversal_stack.push(make_pair(node->right, indent + 1));
 
 //       // Push left subtree with increased indentation
-//       traversal_stack.push(std::make_pair(node->left, indent + 1));
+//       traversal_stack.push(make_pair(node->left, indent + 1));
 //     }
 //   }
 // }
@@ -168,7 +177,7 @@ void balancedBST::balanceFactors() const {
 void binaryTree::printBalanceFactors(TreeNode* node) const {
     if (node != nullptr) {
         int balanceFactor = getHeight(node->left) - getHeight(node->right);
-        std::cout << node->data << ":" << balanceFactor << " ";
+        cout << node->data << ":" << balanceFactor << " ";
         printBalanceFactors(node->left);
         printBalanceFactors(node->right);
     }
@@ -182,7 +191,7 @@ void binaryTree::post_order(TreeNode* node) const {
     if (node != nullptr) {
         post_order(node->left);
         post_order(node->right);
-        std::cout << node->data << " ";
+        cout << node->data << " ";
     }
 }
 
@@ -193,7 +202,7 @@ void binaryTree::in_order_Traversal() const {
 void binaryTree::in_order(TreeNode* node) const {
     if (node != nullptr) {
         in_order(node->left);
-        std::cout << node->data << " ";
+        cout << node->data << " ";
         in_order(node->right);
     }
 }
@@ -204,7 +213,7 @@ void binaryTree::pre_order_Traversal() const {
 
 void binaryTree::pre_order(TreeNode* node) const {
     if (node != nullptr) {
-        std::cout << node->data << " ";
+        cout << node->data << " ";
         pre_order(node->left);
         pre_order(node->right);
     }
@@ -217,7 +226,7 @@ void binaryTree::level_order_Traversal() const {
 void binaryTree::level_order(TreeNode* node) const {
     if (node == nullptr) return;
 
-    std::queue<TreeNode*> q;
+    queue<TreeNode*> q;
     q.push(node);
 
     while (!q.empty()) {
@@ -228,7 +237,7 @@ void binaryTree::level_order(TreeNode* node) const {
             TreeNode* current = q.front();
             q.pop();
 
-            std::cout << current->data << " ";
+            cout << current->data << " ";
 
             // Enqueue the left and right children of the current node
             if (current->left != nullptr) {
@@ -241,12 +250,12 @@ void binaryTree::level_order(TreeNode* node) const {
     }
 }
 
-std::string binaryTree::level_order_string(TreeNode* node) const {
-    std::string result;
+string binaryTree::level_order_string(TreeNode* node) const {
+    string result;
 
     if (node == nullptr) return result;
 
-    std::queue<TreeNode*> q;
+    queue<TreeNode*> q;
     q.push(node);
 
     while (!q.empty()) {
